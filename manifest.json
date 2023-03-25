@@ -1,0 +1,14 @@
+{
+    "name": "Nextcloud News Reader",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "permissions": [
+        "storage"
+    ],
+    "action": {},
+    "options_page": "src/page/index.html",
+    "background": {
+        "service_worker": "src/background/index.js",
+        "type": "module"
+    }
+}
