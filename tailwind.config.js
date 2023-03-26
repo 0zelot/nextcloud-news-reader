@@ -3,7 +3,7 @@ module.exports = {
         "./src/page/**/*.{vue,html,js}",
     ],
     theme: {
-        extend: {},
+        extend: {}
     },
     plugins: []
 }
