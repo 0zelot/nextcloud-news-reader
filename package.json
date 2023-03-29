@@ -9,6 +9,7 @@
   "dependencies": {
     "autoprefixer": "^10",
     "chrome-storage-promises": "^1.0.1",
+    "flowbite": "^1.6.4",
     "postcss": "^8",
     "tailwindcss": "^3",
     "vue": "^3.2.47"
