@@ -40,7 +40,7 @@
                         </svg>
                     </div>
 
-                    <div v-else>
+                    <div class="reset-margin-top">
 
                         <li v-for="(feed, i) in feeds" :key="i">
                             <a v-if="!feed.folderId" :href="`#FEED-${feed.id}`" class="flex items-center w-full p-1 transition duration-75 rounded-lg group text-gray-100 hover:bg-gray-700 text-xs font-normal pl-3">
@@ -49,12 +49,14 @@
                         </li>
 
                         <li v-for="(folder, i) in folders" :key="i">
-                            <a :href="`#FOLDER-${folder.id}`" class="flex items-center w-full p-1 transition duration-75 rounded-lg group text-white hover:bg-gray-700 pl-3">
-                                <span class="flex-1 text-left whitespace-nowrap">{{ folder.name }}</span>
+                            <div class="flex items-center p-1 transition duration-75 rounded-lg group text-white hover:bg-gray-700 pl-3">
+                                <a :href="`#FOLDER-${folder.id}`" class="w-full">
+                                    <span class="flex-1 text-left whitespace-nowrap">{{ folder.name }}</span>
+                                </a>
                                 <button type="button" :aria-controls="`dropdown-${folder.id}`" :data-collapse-toggle="`dropdown-${folder.id}`">
-                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                    <svg v-if="folder.name" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                 </button>
-                            </a>
+                            </div>
                             <ul :id="`dropdown-${folder.id}`">
                                 <li v-for="(feed, j) in feeds" :key="j">
                                     <a v-if="feed.folderId == folder.id" :href="`#FEED-${feed.id}`" class="flex items-center w-full p-1 transition duration-75 rounded-lg pl-5 group text-gray-100 hover:bg-gray-700 text-xs font-normal">
@@ -65,8 +67,6 @@
                         </li>
 
                     </div>
-
-
 
                 </ul>
 
@@ -79,6 +79,7 @@
 
 <script>
 import { local } from "chrome-storage-promises";
+import { initFlowbite } from "flowbite";
 
 export default {
     
@@ -92,17 +93,19 @@ export default {
         }
     },
 
+    mounted() {
+        initFlowbite();
+    },
+
     async created() {
+        
+        for(let id = 0; id < 99; id++) this.folders.push({id});
+
         this.loading = true;
         const fromLocal = (await local.get("options")).options;
         if(fromLocal) this.options = fromLocal;
 
         try {
-            this.folders = (await (await fetch(`${this.options.auth.url}/index.php/apps/news/api/v1-2/folders`, {
-                headers: {
-                    "Authorization": `Basic ${this.options.auth.key}`
-                }
-            })).json()).folders;
 
             this.feeds = (await (await fetch(`${this.options.auth.url}/index.php/apps/news/api/v1-2/feeds`, {
                 headers: {
@@ -110,7 +113,11 @@ export default {
                 }
             })).json()).feeds;
 
-            console.log(this.feeds)
+            this.folders = (await (await fetch(`${this.options.auth.url}/index.php/apps/news/api/v1-2/folders`, {
+                headers: {
+                    "Authorization": `Basic ${this.options.auth.key}`
+                }
+            })).json()).folders;
 
         } catch(err) {
             console.error(err);
