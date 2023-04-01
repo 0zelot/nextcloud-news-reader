@@ -5,6 +5,8 @@
 
         <Dash v-else />
 
+        <AddNew />
+
     </div>
 </template>
 
@@ -14,11 +16,14 @@ import { local } from "chrome-storage-promises";
 import Auth from "./components/Auth.vue";
 import Dash from "./components/Dash.vue";
 
+import AddNew from "./components/modals/AddNew.vue";
+
 export default {
 
     components: {
         Auth, 
-        Dash
+        Dash,
+        AddNew
     },
 
     data() {
@@ -38,10 +43,7 @@ export default {
             this.options = fromLocal;
         else
             local.set({options: this.options});
-    },
-
-    methods: {
-
     }
+    
 }
 </script>
