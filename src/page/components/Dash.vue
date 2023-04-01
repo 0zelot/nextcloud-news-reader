@@ -3,9 +3,9 @@
 
         <Sidebar />
 
-        <div class="p-12 sm:ml-64">
-            <p class="text-white text-center text-lg">TODO</p>
-        </div>
+        <main class="p-12 sm:ml-64">
+            <ItemList />
+        </main>
         
 
     </div>
@@ -13,14 +13,15 @@
 
 <script>
 import { local } from "chrome-storage-promises";
-import { initFlowbite } from "flowbite";
 
 import Sidebar from "./Sidebar.vue";
+import ItemList from "./ItemList.vue";
     
 export default {
 
     components: {
-        Sidebar
+        Sidebar,
+        ItemList
     },
 
     data() {
@@ -29,10 +30,6 @@ export default {
             auth_error: "",
             ver: ""
         }
-    },
-
-    mounted() {
-        initFlowbite();
     },
 
     async created() {
@@ -52,10 +49,6 @@ export default {
             console.error(err);
             this.auth_error = err.message;
         }
-
-    },
-
-    methods: {
 
     }
 
