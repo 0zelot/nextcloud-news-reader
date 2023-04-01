@@ -33,6 +33,15 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="#" data-modal-target="add-new-modal" data-modal-toggle="add-new-modal" class="flex items-center p-1 rounded-lg text-white hover:bg-gray-700 pl-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                                <path fill-rule="evenodd" d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z" clip-rule="evenodd" />
+                            </svg>
+                            <span class="ml-1">Add new</span>
+                        </a>
+                    </li>
+
                     <div v-if="loading" class="text-center">
                         <svg aria-hidden="true" role="status" class="inline w-8 h-8 animate-spin text-gray-300" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
@@ -107,17 +116,17 @@ export default {
 
         try {
 
-            this.feeds = (await (await fetch(`${this.options.auth.url}/index.php/apps/news/api/v1-2/feeds`, {
-                headers: {
-                    "Authorization": `Basic ${this.options.auth.key}`
-                }
-            })).json()).feeds;
-
             this.folders = (await (await fetch(`${this.options.auth.url}/index.php/apps/news/api/v1-2/folders`, {
                 headers: {
                     "Authorization": `Basic ${this.options.auth.key}`
                 }
             })).json()).folders;
+
+            this.feeds = (await (await fetch(`${this.options.auth.url}/index.php/apps/news/api/v1-2/feeds`, {
+                headers: {
+                    "Authorization": `Basic ${this.options.auth.key}`
+                }
+            })).json()).feeds;
 
         } catch(err) {
             console.error(err);
@@ -125,6 +134,14 @@ export default {
         }
 
         this.loading = false;
+
+    },
+
+    methods: {
+
+        openContextMenu(id) {
+            console.log(id);
+        }
 
     }
 
