@@ -3,7 +3,7 @@
 
         <Sidebar />
 
-        <main class="p-12 sm:ml-64">
+        <main class="px-16 py-8 sm:ml-64">
             <ItemList />
         </main>
         
