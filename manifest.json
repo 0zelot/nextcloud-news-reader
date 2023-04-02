@@ -4,12 +4,14 @@
     "manifest_version": 3,
     "permissions": [
         "storage",
-        "unlimitedStorage"
+        "unlimitedStorage",
+        "alarms"
     ],
     "action": {},
     "options_page": "src/page/index.html",
     "background": {
         "service_worker": "src/background/index.js",
-        "type": "module"
+        "type": "module",
+        "persistent": true
     }
 }
