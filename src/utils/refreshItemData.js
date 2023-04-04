@@ -39,7 +39,7 @@ export default async () => {
             }
         }
 
-        const list = (await (await fetch(`${options.auth.url}/index.php/apps/news/api/v1-2/items?type=3&batchSize=-1`, {
+        const list = (await (await fetch(`${options.auth.url}/index.php/apps/news/api/v1-2/items?type=3&batchSize=5000`, {
             headers: {
                 "Authorization": `Basic ${options.auth.key}`
             }
@@ -66,6 +66,8 @@ export default async () => {
         }
 
         await local.set({items: formatted});
+        console.log(list)
+        console.log(formatted)
 
         return true;
 
