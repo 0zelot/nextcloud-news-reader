@@ -6,6 +6,11 @@
         <Dash v-else />
 
         <AddNew />
+        <RemoveFeed />
+        <RenameFeed />
+        <ChangeFolder />
+        <RenameFolder />
+        <RemoveFolder />
 
     </div>
 </template>
@@ -17,13 +22,23 @@ import Auth from "./components/Auth.vue";
 import Dash from "./components/Dash.vue";
 
 import AddNew from "./components/modals/AddNew.vue";
+import RemoveFeed from "./components/modals/RemoveFeed.vue";
+import RenameFeed from "./components/modals/RenameFeed.vue";
+import ChangeFolder from "./components/modals/ChangeFolder.vue";
+import RenameFolder from "./components/modals/RenameFolder.vue";
+import RemoveFolder from "./components/modals/RemoveFolder.vue";
 
 export default {
 
     components: {
         Auth, 
         Dash,
-        AddNew
+        AddNew,
+        RemoveFeed,
+        RenameFeed,
+        ChangeFolder,
+        RenameFolder,
+        RemoveFolder
     },
 
     data() {
