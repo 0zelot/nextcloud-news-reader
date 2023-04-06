@@ -126,14 +126,6 @@ export default {
 
         this.loading = false;
 
-    },
-
-    methods: {
-
-        openContextMenu(id) {
-            console.log(id);
-        }
-
     }
 
 }

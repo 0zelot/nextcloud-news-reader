@@ -34,8 +34,7 @@ export default async () => {
         const formatted = {
             updated,
             data: {
-                "/": [],
-                "/STARRED": []
+                "/": []
             }
         }
 
@@ -60,8 +59,6 @@ export default async () => {
                 formatted.data[`/FOLDER-${folder.id}`].push(item);
 
             }
-
-            if(item.starred) formatted.data["/STARRED"].push(item);
 
         }
 
