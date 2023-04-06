@@ -10,8 +10,10 @@
     "autoprefixer": "^10",
     "chrome-storage-promises": "^1.0.1",
     "flowbite": "^1.6.4",
+    "ms": "^2.1.3",
     "postcss": "^8",
     "tailwindcss": "^3",
+    "v-lazy-image": "^2.1.1",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },
