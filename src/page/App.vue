@@ -11,6 +11,7 @@
         <ChangeFolder />
         <RenameFolder />
         <RemoveFolder />
+        <Settings />
 
     </div>
 </template>
@@ -27,6 +28,7 @@ import RenameFeed from "./components/modals/RenameFeed.vue";
 import ChangeFolder from "./components/modals/ChangeFolder.vue";
 import RenameFolder from "./components/modals/RenameFolder.vue";
 import RemoveFolder from "./components/modals/RemoveFolder.vue";
+import Settings from "./components/modals/Settings.vue";
 
 export default {
 
@@ -38,7 +40,8 @@ export default {
         RenameFeed,
         ChangeFolder,
         RenameFolder,
-        RemoveFolder
+        RemoveFolder,
+        Settings
     },
 
     data() {
