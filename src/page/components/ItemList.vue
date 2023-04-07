@@ -55,11 +55,22 @@
 
             <section v-for="(item, i) in items.data" :key="i" class="text-white">
 
-                <a :href="item.url" target="_blank" class="flex flex-col md:h-auto border rounded-lg shadow md:flex-row border-gray-700 bg-gray-800 hover:bg-gray-700 my-2 mx-auto w-full lg:w-3/4">
+                <a v-if="!options.settings || options.settings.itemView == 'list'" :href="item.url" target="_blank" class="flex flex-col md:h-auto border rounded-lg shadow md:flex-row border-gray-700 bg-gray-800 hover:bg-gray-700 my-2 mx-auto w-full lg:w-3/4">
                     <v-lazy-image v-if="item.image" class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" :src="item.image" alt="" />
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{ item.title }}</h5>
                         <p class="mb-3 font-normal text-gray-400 align-top">{{ item.body.replaceAll(/<[^>]*>/gm, "").slice(0, 1000) }}</p>
+                        <p class="text-xs text-neutral-300">
+                            <span v-if="item.author">{{ item.author }} | </span>
+                            <span v-if="item.pubDate">{{ ms(Date.now() - item.pubDate*1000, {long: true}) }} ago</span>
+                        </p>
+                    </div>
+                </a>
+
+                <a v-else-if="options.settings.itemView == 'card'" :href="item.url" target="_blank" class="flex flex-col h-auto border rounded-lg shadow flex-row border-gray-700 bg-gray-800 hover:bg-gray-700 my-2 mx-auto w-full lg:w-[45rem]">
+                    <v-lazy-image v-if="item.image" class="object-cover w-full rounded-t-lg h-auto rounded-none rounded-l-lg" :src="item.image" alt="" />
+                    <div class="flex flex-col justify-between p-4 leading-normal">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{ item.title }}</h5>
                         <p class="text-xs text-neutral-300">
                             <span v-if="item.author">{{ item.author }} | </span>
                             <span v-if="item.pubDate">{{ ms(Date.now() - item.pubDate*1000, {long: true}) }} ago</span>
