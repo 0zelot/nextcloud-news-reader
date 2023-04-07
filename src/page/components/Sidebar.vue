@@ -40,6 +40,14 @@
                         </svg>
                     </div>
 
+                    <div v-else-if="auth_error" class="flex p-4 mb-4 mt-6 rounded-lg bg-gray-800 text-red-400" role="alert">
+                        <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                        <div class="ml-3 text-sm font-medium">
+                            Authorization failed: {{auth_error}}<br />
+                            See Developer Console for more info.
+                        </div>
+                    </div>
+
                     <div class="reset-margin-top">
 
                         <li v-for="(feed, i) in feeds" :key="i">
@@ -57,7 +65,7 @@
                                     <svg v-if="folder.name" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                 </button>
                             </div>
-                            <ul :id="`dropdown-${folder.id}`">
+                            <ul v-bind:class="options?.settings?.collapseFolders ? 'hidden' : null" :id="`dropdown-${folder.id}`">
                                 <li v-for="(feed, j) in feeds" :key="j">
                                     <a v-if="feed.folderId == folder.id" :href="`#FEED-${feed.id}`" class="flex items-center w-full p-1 transition duration-75 rounded-lg pl-5 group text-gray-100 hover:bg-gray-700 text-xs font-normal">
                                         <img :src="feed.faviconLink" class="rounded-full w-4 h-4 m-1" alt="Favicon">{{ feed.title }}
