@@ -55,7 +55,7 @@
 
             <section v-for="(item, i) in items.data" :key="i" class="text-white">
 
-                <a v-if="!options.settings || options.settings.itemView == 'list'" :href="item.url" target="_blank" class="flex flex-col md:h-auto border rounded-lg shadow md:flex-row border-gray-700 bg-gray-800 hover:bg-gray-700 my-2 mx-auto w-full lg:w-3/4">
+                <a v-if="!options?.settings?.itemView || options.settings.itemView == 'list'" :href="item.url" target="_blank" class="flex flex-col md:h-auto border rounded-lg shadow md:flex-row border-gray-700 bg-gray-800 hover:bg-gray-700 my-2 mx-auto w-full lg:w-3/4">
                     <v-lazy-image v-if="item.image" class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" :src="item.image" alt="" />
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{ item.title }}</h5>
@@ -149,6 +149,7 @@ export default {
             if(options) this.options = options;
 
             const items = (await local.get("items")).items;
+            if(!items) return this.loading = false;
 
             this.items = {
                 updated: items.updated,
@@ -180,10 +181,8 @@ export default {
 
             this.updating = true;
 
-            const status = await refreshItemData();
+            await refreshItemData();
             
-            if(!status) return console.error(status);
-
             const items = (await local.get("items")).items;
 
             this.items = {
