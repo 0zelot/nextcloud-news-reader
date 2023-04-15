@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="min-h-screen bg-gray-900" :class="options.theme">
+    <div id="app" class="min-h-screen bg-gray-900">
 
         <Auth v-if="!options.auth.url || !options.auth.key" />
 
