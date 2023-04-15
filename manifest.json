@@ -7,11 +7,18 @@
         "unlimitedStorage",
         "alarms"
     ],
-    "action": {},
+    "action": {
+        "default_icon": {
+            "32": "src/assets/favicon.png"
+        }
+    },
     "options_page": "src/page/index.html",
     "background": {
         "service_worker": "src/background/index.js",
         "type": "module",
         "persistent": true
+    },
+    "icons": {
+        "128": "src/assets/favicon.png"
     }
 }
