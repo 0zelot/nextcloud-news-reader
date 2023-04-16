@@ -38,7 +38,7 @@ export default async () => {
             }
         }
 
-        const list = (await (await fetch(`${options.auth.url}/index.php/apps/news/api/v1-2/items?type=3&batchSize=${options.settings ? options.settings?.batchSize : 6000}`, {
+        const list = (await (await fetch(`${options.auth.url}/index.php/apps/news/api/v1-2/items?type=3&batchSize=${options.settings?.batchSize ? options.settings?.batchSize : 6000}`, {
             headers: {
                 "Authorization": `Basic ${options.auth.key}`
             }
