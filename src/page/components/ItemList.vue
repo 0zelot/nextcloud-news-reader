@@ -29,17 +29,21 @@
                     
         </div>
 
-        <header class="my-4">
+        <header v-if="$route.path.startsWith('/FEED-') || $route.path.startsWith('/FOLDER-')" class="my-4 flow-root">
 
-            <div v-if="$route.path.startsWith('/FEED-')">
+            <div v-if="$route.path.startsWith('/FEED-')" class="float-left">
                 <button data-modal-target="rename-feed-modal" data-modal-toggle="rename-feed-modal" class="text-white focus:ring-4 focus:outline-none font-small rounded-lg text-sm px-2.5 py-1.5 mx-0.5 text-center bg-gray-600 hover:bg-gray-700 focus:ring-gray-800">Rename feed</button>
                 <button data-modal-target="change-folder-modal" data-modal-toggle="change-folder-modal" class="text-white focus:ring-4 focus:outline-none font-small rounded-lg text-sm px-2.5 py-1.5 mx-0.5 text-center bg-gray-600 hover:bg-gray-700 focus:ring-gray-800">Change folder</button>
                 <button data-modal-target="remove-feed-modal" data-modal-toggle="remove-feed-modal" class="text-white focus:ring-4 focus:outline-none font-small rounded-lg text-sm px-2.5 py-1.5 mx-0.5 text-center bg-red-600 hover:bg-red-700 focus:ring-red-800">Remove feed</button>
             </div>
 
-            <div v-else-if="$route.path.startsWith('/FOLDER-')">
+            <div v-else-if="$route.path.startsWith('/FOLDER-')" class="float-left">
                 <button data-modal-target="rename-folder-modal" data-modal-toggle="rename-folder-modal" class="text-white focus:ring-4 focus:outline-none font-small rounded-lg text-sm px-2.5 py-1.5 mx-0.5 text-center bg-gray-600 hover:bg-gray-700 focus:ring-gray-800">Rename folder</button>
                 <button data-modal-target="remove-folder-modal" data-modal-toggle="remove-folder-modal" class="text-white focus:ring-4 focus:outline-none font-small rounded-lg text-sm px-2.5 py-1.5 mx-0.5 text-center bg-red-600 hover:bg-red-700 focus:ring-red-800">Remove folder</button>
+            </div>
+
+            <div class="float-right">
+                <button @click="changeView($route)" class="text-white focus:ring-4 focus:outline-none font-small rounded-lg text-sm px-2.5 py-1.5 mx-0.5 text-center bg-gray-600 hover:bg-gray-700 focus:ring-gray-800">View as {{ options?.customViews ? options.customViews[$route.path] : "" }}</button>
             </div>
 
         </header>
@@ -55,7 +59,7 @@
 
             <section v-for="(item, i) in items.data" :key="i" class="text-white">
 
-                <a v-if="!options?.settings?.itemView || options.settings.itemView == 'list'" :href="item.url" target="_blank" class="flex flex-col md:h-auto border rounded-lg shadow md:flex-row border-gray-700 bg-gray-800 hover:bg-gray-700 my-2 mx-auto w-full lg:w-3/4">
+                <a v-if="view == 'list'" :href="item.url" target="_blank" class="flex flex-col md:h-auto border rounded-lg shadow md:flex-row border-gray-700 bg-gray-800 hover:bg-gray-700 my-2 mx-auto w-full lg:w-3/4">
                     <v-lazy-image v-if="item.image" class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" :src="item.image" alt="" />
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{ item.title }}</h5>
@@ -67,7 +71,7 @@
                     </div>
                 </a>
 
-                <a v-else-if="options.settings.itemView == 'card'" :href="item.url" target="_blank" class="flex flex-col h-auto border rounded-lg shadow flex-row border-gray-700 bg-gray-800 hover:bg-gray-700 my-2 mx-auto w-full lg:w-[45rem]">
+                <a v-else-if="view == 'card'" :href="item.url" target="_blank" class="flex flex-col h-auto border rounded-lg shadow flex-row border-gray-700 bg-gray-800 hover:bg-gray-700 my-2 mx-auto w-full lg:w-[45rem]">
                     <v-lazy-image v-if="item.image" class="object-cover w-full rounded-t-lg h-auto rounded-none rounded-l-lg" :src="item.image" alt="" />
                     <div class="flex flex-col justify-between p-4 leading-normal">
                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{ item.title }}</h5>
@@ -108,6 +112,7 @@ export default {
             error: "",
             updating: false,
             loading: true,
+            view: "",
             items: {
                 updated: 0,
                 data: []
@@ -173,7 +178,19 @@ export default {
 
             }
 
+            if(options.customViews && options.customViews[route.path])
+                this.view = options.customViews[route.path];
+
+            else if(options.settings?.itemView)
+                this.view = options.settings.itemView;
+
+            else
+                this.view = "list";
+
             this.loading = false;
+
+            console.log(this.items.data.length);
+            console.log(options)
 
         },
 
@@ -193,6 +210,32 @@ export default {
             this.updating = false;
 
             this.load(route);
+
+        },
+
+        async changeView(route) {
+
+            if(!this.options["customViews"]) this.options["customViews"] = {};
+
+            if(this.options.customViews[route.path]) {
+                this.view = (this.options.customViews[route.path] == "list") ? "card" : "list";
+                this.options.customViews[route.path] = this.view;
+            }
+
+            else if(this.options.settings?.itemView) {
+                this.view = (this.options.settings.itemView == "list") ? "card" : "list";
+                this.options.customViews[route.path] = this.view;
+            }
+
+            else { 
+                this.options.customViews[route.path] = "card";
+                this.view = "card"
+            }
+            
+            local.set({options: this.options});
+
+            const options = (await local.get("options")).options;
+            if(options) this.options = options;
 
         }
 
