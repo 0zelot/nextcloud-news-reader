@@ -4,7 +4,7 @@ Simple, unofficial Chrome extension for reading articles delivered by **Nextclou
 
 This extension **is not** in Chrome Web Store because Google requires a verification fee to publish it there. This app was created primarily for personal use only.
 
-### Instalation
+### Installation
 
 1. Make sure you have a properly installed [Nextcloud](https://nextcloud.com) with the [Nextcloud News](https://apps.nextcloud.com/apps/news) app.
 
