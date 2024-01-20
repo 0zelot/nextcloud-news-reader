@@ -23,7 +23,7 @@
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.7",
-    "vite": "^2.9.14",
+    "vite": "^2.9.17",
     "vue-cli-plugin-tailwind": "~3.0.0"
   }
 }
